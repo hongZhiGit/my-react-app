@@ -1,0 +1,57 @@
+.flex-center {
+  justify-content: center;
+  @extend .flex-base;
+}
+.flex-base {
+  display: flex;
+  align-items: center;
+}
+.flex-between {
+  @extend .flex-base;
+  justify-content: space-between;
+}
+
+// 鼠标移动到链接时的样式
+@mixin hover-link {
+  &:hover {
+    color: #64b5f6;
+    cursor: pointer;
+  }
+  transition: color 0.2s ease-in-out;
+}
+
+// 主体文本框
+.main-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin: 0 8%;
+  padding-bottom: 50px;
+  background: rgb(38, 45, 55);
+  z-index: 1100;
+  box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 10px;
+  color: #c4c6c9;
+  min-height: 60vh !important;
+}
+
+// 分页样式
+.pagination {
+  max-width: 500px;
+  position: absolute;
+  bottom: 40px;
+}
+.theme--dark.v-pagination .v-pagination__item {
+  color: #ffffff;
+  background: none;
+}
+.theme--dark.v-pagination .v-pagination__item--active {
+  color: #000;
+  background-color: azure;
+}
+.theme--dark.v-pagination .v-pagination__navigation {
+  background: none;
+}
+

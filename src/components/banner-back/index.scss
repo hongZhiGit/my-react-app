@@ -1,0 +1,46 @@
+$varHeight: var(--height);
+.banner {
+  height: $varHeight;
+  .mask {
+    width: 100%;
+    height: $varHeight;
+    background-color: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+  }
+  .context {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    // margin-top: 0vh - $varHeight;
+    height: 100%;
+    width: 100%;
+  }
+}
+.icon-down {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  position: absolute;
+  top: 90vh;
+  color: #fff;
+  font-size: 40px;
+  animation: downIcon 1.5s infinite;
+}
+@keyframes downIcon {
+  0% {
+    opacity: 0.9;
+    margin-top: 0;
+  }
+  50% {
+    opacity: 0.4;
+    margin-top: 20px;
+  }
+  100% {
+    opacity: 0.9;
+    margin-top: 0;
+  }
+}
