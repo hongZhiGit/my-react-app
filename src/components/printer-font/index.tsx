@@ -1,25 +1,33 @@
 import './index.scss';
-import { useState, FC } from 'react';
+import { useState, ForwardRefRenderFunction, forwardRef, useImperativeHandle } from 'react';
 
-type PrinterFontDto = {}
+type PrinterFontDto = {};
 
-const PrinterFont: FC<PrinterFontDto> = (props) => {
+const PrinterFont: ForwardRefRenderFunction<PrinterFontDto> = (props, ref) => {
   const [title, setTitle] = useState('');
   const [printerOut, setPrinterOut] = useState(false);
 
-  const setFont = (titleName: string) => {
-    const printer = (index: number) => {
-      setTimeout(() => {
-        if (index >= titleName.length) {
-          setPrinterOut(true);
-          return;
-        }
-        setTitle(title + titleName[index]);
-        printer(++index);
-      }, 140);
-    };
-    printer(0);
-  };
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        setFont(titleName: string) {
+          const printer = (index: number) => {
+            setTimeout(() => {
+              if (index >= titleName.length) {
+                setPrinterOut(true);
+                return;
+              }
+              setTitle(title + titleName[index]);
+              printer(++index);
+            }, 140);
+          };
+          printer(0);
+        },
+      };
+    },
+    []
+  );
 
   return (
     <h2 className="printer">
@@ -27,6 +35,6 @@ const PrinterFont: FC<PrinterFontDto> = (props) => {
       {title && <span className={printerOut ? 'underline' : ''}>_</span>}
     </h2>
   );
-}
+};
 
-export default PrinterFont;
+export default forwardRef(PrinterFont);

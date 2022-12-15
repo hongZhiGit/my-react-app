@@ -1,7 +1,11 @@
 import PrinterFont from "../printer-font";
 import './index.scss';
 import { DownOutlined } from '@ant-design/icons';
-import { FC, useState } from 'react';
+import { ForwardRefRenderFunction, useState, useImperativeHandle, useRef, forwardRef, FC } from 'react';
+
+interface IBannerBackRef {
+  setFont: any;
+}
 
 type BannerBackProps = {
   height?: string,
@@ -9,28 +13,39 @@ type BannerBackProps = {
   downArrow?: boolean,
 }
 
-const BannerBack: FC<BannerBackProps> = (props) => {
+const BannerBack: ForwardRefRenderFunction<IBannerBackRef, BannerBackProps> = (props, ref) => {
   const [height, setHeight] = useState(props.height || '100vh');
   const [backSrc, setBackSrc] = useState(props.backSrc || 'https://rmt.dogedoge.com/fetch/fluid/storage/bg/vdysjx.png?w=1920&fmt=webp');
   const [downArrow, setDownArrow] = useState(props.downArrow || false);
 
+  const printerFontRef = useRef<any>();
+
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        setFont(titleName: string) {
+          printerFontRef.current.setFont(titleName);
+        },
+      };
+    },
+    []
+  );
+
   const bannerStyle = {
-    '--height': props.height,
-    background: `url('${props.backSrc}') center / cover no-repeat`,
+    '--height': height,
+    background: `url('${backSrc}') center / cover no-repeat`,
   };
 
-  // const setFont = (titleName) => { 
-  //   <PrinterFont className="setFont"></PrinterFont>
-  // }
   return (<div className="banner" style={bannerStyle}>
-    {props.downArrow && <div className="down-icon">
+    {downArrow && <div className="down-icon">
       <DownOutlined className="icon-down"/>
     </div>}
     <div className="mask"></div>
     <div className="context">
-      <PrinterFont></PrinterFont>
+      <PrinterFont ref={printerFontRef}></PrinterFont>
     </div>
   </div>);
 }
 
-export default BannerBack;
+export default forwardRef(BannerBack);
